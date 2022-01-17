@@ -33,9 +33,9 @@ public class RuleEngineServiceImpl implements RuleEngineService {
     @Override
     public Map<String, Object> execute(String company, String ruleGroup, Map<String, Object> payload) {
 
-        Map<String, Object> rule1Request = executeKieRule("CreditScoreCardV1",
-                getRequestTemplate("CreditScoreCardV1", "com.financialsettings.CreditScoreCardInquiry", payload));
-        Map<String, Object> rule1Response = getResponseTemplate("com.financialsettings.CreditScoreCardInquiry", rule1Request);
+//        Map<String, Object> rule1Request = executeKieRule("CreditScoreCardV1",
+//                getRequestTemplate("CreditScoreCardV1", "com.financialsettings.CreditScoreCardInquiry", payload));
+//        Map<String, Object> rule1Response = getResponseTemplate("com.financialsettings.CreditScoreCardInquiry", rule1Request);
 
         Map<String, Object> rule2Request = executeKieRule("FinancialSettingsV1",
                 getRequestTemplate("FinancialSettingsV1", "com.financialsettings.FinancialSettingsInquiry", payload));
@@ -43,8 +43,12 @@ public class RuleEngineServiceImpl implements RuleEngineService {
 
 
         Map<String, Object> response =  new HashMap<>();
-        response.putAll(rule1Response);
-        response.putAll(rule2Response);
+//        response.putAll(rule1Response);
+//        response.putAll(rule2Response);
+        response.put("pti", rule2Response.get("pti"));
+        response.put("maxLoan", rule2Response.get("maxLoan"));
+        response.put("interestRate", rule2Response.get("interestRate"));
+
 
         return response;
     }
